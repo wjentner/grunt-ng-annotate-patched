@@ -2,11 +2,17 @@
   "name": "grunt-ng-annotate-patched",
   "version": "3.1.1-pre",
   "description": "Add, remove and rebuild AngularJS dependency injection annotations.",
-  "homepage": "https://github.com/mgol/grunt-ng-annotate",
+  "homepage": "https://github.com/wjentner/grunt-ng-annotate-patched",
   "author": {
-    "name": "Michał Gołębiowski-Owczarek",
-    "email": "m.goleb@gmail.com"
+    "name": "Wolfgang Jentner",
+    "email": "wolfgang.jentner@uni-konstanz.de"
   },
+  "contributors": [
+    {
+      "name": "Michał Gołębiowski-Owczarek",
+      "email": "m.goleb@gmail.com"
+    }
+  ],
   "keywords": [
     "angular",
     "angularjs",
@@ -20,13 +26,14 @@
     "grunt",
     "gruntplugin",
     "non-intrusive",
-    "transformation"
+    "transformation",
+    "ng-annotate-patched"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mgol/grunt-ng-annotate.git"
+    "url": "https://github.com/wjentner/grunt-ng-annotate-patched.git"
   },
-  "bugs": "https://github.com/mgol/grunt-ng-annotate/issues",
+  "bugs": "https://github.com/wjentner/grunt-ng-annotate-patched/issues",
   "license": "MIT",
   "files": [
     "tasks",

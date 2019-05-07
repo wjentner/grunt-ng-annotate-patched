@@ -1,3 +1,4 @@
+/* jshint esversion: 6, node: true, mocha: true */
 // Note: we don't need to test full ngAnnotate functionality here as that's already
 // tested in ngAnnotate repository. We just need to check if we pass what we should
 // to ngAnnotate, as well as our custom options.
@@ -87,11 +88,11 @@ describe('grunt-ng-annotate API', () => {
                     line: 5,
                     column: 63,
                 })).to.eql({
-                    line: 5,
-                    column: 35,
-                    source: smc.sources[0],
-                    name: null,
-                });
+                line: 5,
+                column: 35,
+                source: smc.sources[0],
+                name: null,
+            });
         });
 
         it('should generate an external source map when asked', () => {
@@ -122,11 +123,11 @@ describe('grunt-ng-annotate API', () => {
                     line: 9,
                     column: 19,
                 })).to.eql({
-                    line: 8,
-                    column: 22,
-                    source: smc.sources[smc.sources.length - 1],
-                    name: 'uselessConstant',
-                });
+                line: 8,
+                column: 22,
+                source: smc.sources[smc.sources.length - 1],
+                name: 'uselessConstant',
+            });
         });
     });
 });

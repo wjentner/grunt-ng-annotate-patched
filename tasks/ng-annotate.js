@@ -1,3 +1,4 @@
+/* jshint esversion: 6, node: true */
 /**
  * grunt-ng-annotate
  * https://github.com/mzgol/grunt-ng-annotate
@@ -194,7 +195,7 @@ module.exports = function (grunt) {
                     grunt.log.ok('No files provided to the ngAnnotate task.');
                 } else {
                     grunt.log.ok(`${ filesNum + (filesNum === 1 ? ' file' : ' files')
-                        } successfully annotated.`);
+                    } successfully annotated.`);
                 }
             }
             return validRun;

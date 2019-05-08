@@ -73,39 +73,44 @@ describe('grunt-ng-annotate API', () => {
     describe('source maps', () => {
         const getSourcePart = source => source.replace(/\n\/\/# sourceMappingURL=\S+/, '');
 
-        it('should generate an inline source map by default', () => {
+        it('should generate an inline source map by default', done => {
             const generated = readTmp('not-annotated-source-map.js');
             const existingMap = convertSourceMap.fromSource(generated).toObject();
-            const smc = new SourceMapConsumer(existingMap);
-
-            expect(smc.sources).to.eql(['../fixtures/not-annotated.js']);
-            expect(smc.sourcesContent).to.eql([readFix('../fixtures/not-annotated.js')]);
 
             expect(getSourcePart(generated).trim()).to.be(readFix('annotated.js').trim());
 
-            expect(
-                smc.originalPositionFor({
+            const smc = new SourceMapConsumer(existingMap);
+
+            smc.then(consumer => {
+                expect(consumer.sources).to.eql(['../fixtures/not-annotated.js']);
+                expect(consumer.sourcesContent).to.eql([readFix('../fixtures/not-annotated.js')]);
+
+                expect(
+                    consumer.originalPositionFor({
+                        line: 5,
+                        column: 63,
+                    })).to.eql({
                     line: 5,
-                    column: 63,
-                })).to.eql({
-                line: 5,
-                column: 35,
-                source: smc.sources[0],
-                name: null,
-            });
+                    column: 35,
+                    source: consumer.sources[0],
+                    name: null,
+                });
+            }).then(done, done);
         });
 
-        it('should generate an external source map when asked', () => {
+        it('should generate an external source map when asked', done => {
             const generated = readTmp('not-annotated-source-map-external.js');
             const smc = new SourceMapConsumer(readTmp('not-annotated-source-map-external.js.map'));
 
             expect(getSourcePart(generated).trim()).to.be(readFix('annotated.js').trim());
 
-            expect(smc.sources).to.eql(['../fixtures/not-annotated.js']);
-            expect(smc.sourcesContent).to.eql([readFix('not-annotated.js')]);
+            smc.then(consumer => {
+                expect(consumer.sources).to.eql(['../fixtures/not-annotated.js']);
+                expect(consumer.sourcesContent).to.eql([readFix('not-annotated.js')]);
+            }).then(done, done);
         });
 
-        it('should combine source maps', () => {
+        it('should combine source maps', done => {
             const generated = readTmp('not-annotated-es6-source-map.js');
 
             expect(getSourcePart(generated).trim()).to.be(readFix('annotated-es6.js').trim());
@@ -113,21 +118,23 @@ describe('grunt-ng-annotate API', () => {
             const existingMap = convertSourceMap.fromSource(generated).toObject();
             const smc = new SourceMapConsumer(existingMap);
 
-            expect(smc.sources).to.eql([
-                'not-annotated-es6.js',
-                '../fixtures/not-annotated-es6.js',
-            ]);
-
-            expect(
-                smc.originalPositionFor({
-                    line: 9,
-                    column: 19,
-                })).to.eql({
-                line: 8,
-                column: 22,
-                source: smc.sources[smc.sources.length - 1],
-                name: 'uselessConstant',
-            });
+            smc.then(consumer => {
+                expect(consumer.sources).to.eql([
+                    'not-annotated-es6.js',
+                    '../fixtures/not-annotated-es6.js',
+                ]);
+    
+                expect(
+                    consumer.originalPositionFor({
+                        line: 9,
+                        column: 19,
+                    })).to.eql({
+                    line: 8,
+                    column: 22,
+                    source: consumer.sources[consumer.sources.length - 1],
+                    name: 'uselessConstant',
+                });
+            }).then(done, done);
         });
     });
 });

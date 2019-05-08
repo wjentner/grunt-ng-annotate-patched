@@ -123,7 +123,7 @@ describe('grunt-ng-annotate API', () => {
                     'not-annotated-es6.js',
                     '../fixtures/not-annotated-es6.js',
                 ]);
-    
+
                 expect(
                     consumer.originalPositionFor({
                         line: 9,
